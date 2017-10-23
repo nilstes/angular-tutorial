@@ -22,3 +22,17 @@ Nå har vi fått opprettet et prosjekt  med en del innhold:
 * **e2e**: mappe for tester 
 
 La oss bygge prosjektet og starte serveren: 
+
+```
+ng serve --open 
+```
+
+Dette åpner også opp en nettleser på http://localhost:4200. La oss endre litt kode. Åpne `src/app/app.component.ts` i en teksteditor. 
+
+Finn følgende kode: 
+
+```javascript
+export class AppComponent {
+  title = 'app'; 
+}
+```
