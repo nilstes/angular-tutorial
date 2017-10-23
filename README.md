@@ -94,3 +94,49 @@ th {
     color: white;
 }
 ```
+
+Vi venter litt med ts-fila til vi har laget oss en service for å hente data. Så endrer vi html-fila i `app.component.html` slik at hovedkomponenten også inkluderer vår nye listekomponent:
+
+```html
+<div style="text-align:center">
+  <h1>
+    Welcome to {{title}}!
+  </h1>
+  <app-my-list></app-my-list>
+</div>
+```
+
+# Service
+
+Nå kan vi lage oss en Service for å hente data. Vi kan generere en tom Service-klasse på denne måten:
+
+```
+ng generate service Person
+```
+
+La oss endre `person.service.ts` som ble generert for oss:
+
+```javascript
+import { Injectable } from '@angular/core';
+import { Person } from './person';
+
+@Injectable()
+export class PersonService {
+
+    constructor() {}
+ 
+    getPersons(): Person[] {
+        return [{navn:"Nils", adresse: "Skogen", alder: 25}];
+    }
+}
+```
+
+Da må vi også lage en Person-klasse med samme format, `person.ts`:
+
+```typescript
+export class Person {
+  navn: string;
+  adresse: string;
+  alder: number;
+}
+```
