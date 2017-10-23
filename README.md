@@ -8,7 +8,7 @@ Dette er et starter-kit som gjør det enkelt å komme i gang med Angular. Med de
 npm install -g @angular/cli 
 ```
 
-Se for øvrig denne nettsiden for mer utfyllende informasjon: [https://angular.io/guide/quickstart] (https://angular.io/guide/quickstart). Sjekk også *ng-inspector plugin* for Chrome, Firefox og Safari. 
+Se for øvrig denne nettsiden for mer utfyllende informasjon: https://angular.io/guide/quickstart. Sjekk også *ng-inspector plugin* for Chrome, Firefox og Safari. 
 Nå kan vi opprette et nytt prosjekt. Følgende kommando vil opprette en ny mappe my-app med innhold:
 
 ```
@@ -34,5 +34,63 @@ Finn følgende kode:
 ```javascript
 export class AppComponent {
   title = 'app'; 
+}
+```
+
+... og erstatt innholdet av app med f.eks navnet ditt. Nettsiden skal nå hilse deg personlig uten at du trenger å bygge på nytt… 
+
+# Komponenter
+Nå kan vi lage en ny komponent: 
+
+```
+$ ng generate component MyList
+  create src/app/my-list/my-list.component.html (26 bytes)
+  create src/app/my-list/my-list.component.spec.ts (629 bytes) 
+  create src/app/my-list/my-list.component.ts (272 bytes)
+  create src/app/my-list/my-list.component.css (0 bytes) 
+  update src/app/app.module.ts (398 bytes) 
+```
+
+Vi legger inn html-kode i html-fila og css i css-fila. 
+
+html:
+```html
+<table>
+  <thead>
+     <tr><th>Navn</th><th>Adresse</th><th>Alder</th></tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let person of persons">
+      <td>{{person.navn}}</td>
+      <td>{{person.adresse}}</td>
+      <td>{{person.alder}}</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+css:
+```css
+table {
+    font-size:16px;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    padding-top: 11px;
+    padding-bottom: 11px;
+    background-color: #4CAF50;
+    color: white;
 }
 ```
