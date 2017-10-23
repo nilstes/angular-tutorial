@@ -133,10 +133,93 @@ export class PersonService {
 
 Da må vi også lage en Person-klasse med samme format, `person.ts`:
 
-```typescript
+```javascript
 export class Person {
   navn: string;
   adresse: string;
   alder: number;
 }
+```
+
+Når vi så skal bruke servicen i my-list kan vi injisere denne inn ved help av «dependency injection». Da må vi legge til en provider i `app.module.ts`:
+
+```javascript
+providers: [PersonService],
+```
+
+I `my-list.component.ts` gjør vi følgende:
+
+```javascript
+export class MyListComponent {
+
+    persons=[];
+  
+    constructor(private personService: PersonService) {
+        this.persons=personService.getPersons();
+    }
+}
+```
+
+Her ser vi at konstruktøren tar imot en instans av *PersonService*. Nå vil Angular bruke «dependency injection» og injisere en instans av servicen for oss.
+
+# Kalle en annen REST-server
+
+For å hente data fra en database kan vi for eksempel bruke Node-serveren vi lagde tidligere. Da må vi endre Node-serveren slik at den tillater kall fra andre servere:
+
+```javascript
+    res.setHeader('Access-Control-Allow-Origin', '*');
+```
+
+Så kan vi legge til en ny metode i `person.service.ts`:
+
+```javascript
+    getPersons2(): Promise<Person[]> {
+        console.log("Calling REST service"); 
+        return fetch("http://localhost:8080").then((response) => {
+            console.log(response); 
+            if(!response.ok) {
+                throw response.statusText;
+            }
+            console.log(response); 
+            return response.json();
+        });
+    }
+```
+
+Da må vi også endre måten vi kaller servicen på siden den nå ikke returnerer umiddelbart lengre:
+
+```javascript
+    constructor(private personService: PersonService) {
+        personService.getPersons2().then((result)=>{
+            this.persons=result;
+        }).catch((reason)=>{
+            this.persons=[];
+        });
+    }
+```
+
+# Router
+
+Nå inkluderer vi liste-komponenten inn i `app.component`, men vi kan la denne være dynamisk slik at vi enkelt kan endre skjermbilde ved å endre url’en. Bytt ut `app-my-list` med `router-outlet` i `app.component.html`:
+
+```html
+<router-outlet></router-outlet>
+```
+
+Da må vi også endre `app.module.ts`:
+
+```javascript
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot([
+      {
+        path: 'list',
+        component: MyListComponent
+      },
+      {
+        path: '',
+        component: AppComponent
+      }
+    ])
+  ],
 ```
