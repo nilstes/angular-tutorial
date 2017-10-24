@@ -12,7 +12,8 @@ Se for øvrig denne nettsiden for mer utfyllende informasjon: https://angular.io
 Nå kan vi opprette et nytt prosjekt. Følgende kommando vil opprette en ny mappe my-app med innhold:
 
 ```
-ng new my-app cd my-app 
+ng new my-app 
+cd my-app 
 ```
 
 Nå har vi fått opprettet et prosjekt  med en del innhold:
